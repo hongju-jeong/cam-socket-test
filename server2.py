@@ -18,6 +18,7 @@ def threaded(client_socket, addr):
     print('Connected by :', addr[0], ':', addr[1]) # addr[0] 클라이언트 주소, addr[1] 서버에서 부여한 포트번호 (쓰레드?)
 
     # 클라이언트가 접속을 끊을 때 까지 반복합니다. 
+    n = 0
     while True: 
 
         try:
@@ -42,6 +43,9 @@ def threaded(client_socket, addr):
 
             decimg = cv2.imdecode(data,1)
             cv2.imshow('Image', decimg)
+            if n <10:
+                cv2.imwrite('images/'+str(n)+'.jpg',decimg)
+                n += 1
 
             key = cv2.waitKey(1)
             if key == 27:                #esc누르면 종료
