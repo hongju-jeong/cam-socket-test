@@ -16,7 +16,7 @@ def recvall(sock, count):
 
 def threaded(client_socket, addr): 
 
-    print('Connected by :', addr[0], ':', addr[1]) # addr[0] 클라이언트 주소, addr[1] 서버에서 부여한 포트번호 (쓰레드?)
+    print('Connected by :', addr[0], ':', addr[1]) # addr[0] 클라이언트 주소, addr[1] 접속한 클라이언트 포트
 
     # 클라이언트가 접속을 끊을 때 까지 반복합니다. 
     n = 0
@@ -75,7 +75,7 @@ server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 # HOST는 hostname, ip address, 빈 문자열 ""이 될 수 있습니다.
 # 빈 문자열이면 모든 네트워크 인터페이스로부터의 접속을 허용합니다. 
 # PORT는 1-65535 사이의 숫자를 사용할 수 있습니다.
-server_socket.bind((HOST, PORT)) 
+server_socket.bind(('', PORT)) 
 
 # 서버가 클라이언트의 접속을 허용하도록 합니다.
 server_socket.listen() 

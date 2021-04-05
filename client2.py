@@ -33,7 +33,7 @@ def webcam(queue):
             break
 
 
-HOST = '127.0.0.1'
+HOST = '127.0.0.1'             #호스트는 16x.xxx.xxx.xx 학교 서버 주소
 PORT = 9999
 
 # 소켓 객체를 생성합니다. 
