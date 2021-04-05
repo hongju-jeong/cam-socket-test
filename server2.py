@@ -1,6 +1,7 @@
 import socket 
 import cv2
 import numpy
+from select import *
 from _thread import *
 
 def recvall(sock, count):
@@ -80,6 +81,7 @@ server_socket.bind((HOST, PORT))
 server_socket.listen() 
 
 print('server start')
+socketList = [server_socket]
 
 # 클라이언트가 접속하면 accept 함수에서 새로운 소켓을 리턴합니다.
 # 새로운 쓰레드에서 해당 소켓을 사용하여 통신을 하게 됩니다
@@ -87,8 +89,14 @@ while True:
 
     print('wait')
 
+    try:
+        read_socket, write_socket, error_socket = select(socketList, [], [], 1)
     
-    client_socket, addr = server_socket.accept()  # accept 함수에서 대기하다가 클라이언트가 접속하면 새로운 소켓을 리턴합니다.  addr = 접속한 클라이언트 주소
-    start_new_thread(threaded, (client_socket, addr,)) 
+        for sock in read_socket:
+            if sock == server_socket:
+                client_socket, addr = server_socket.accept()
+                start_new_thread(threaded, (client_socket, addr,))
+    except KeyboardInterrupt:
+        break
 
 server_socket.close() 
